@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,6 +20,8 @@ export default function Login() {
       <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">Login</button>
+
+      <p>Don't have an account? <Link to="/register">Register</Link></p>
     </form>
   );
 }
