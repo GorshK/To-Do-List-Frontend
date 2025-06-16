@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { register } from '../api';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../api'; // this is your API file
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -9,18 +9,31 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register({ email, password });
-    navigate('/');
+    try {
+      await register({ email, password });
+      alert('Registered successfully!');
+      navigate('/'); // Redirect to login page
+    } catch (error) {
+      console.error('Registration failed:', error.response?.data || error.message);
+      alert(error.response?.data?.error || 'Something went wrong');
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Register</h2>
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <button type="submit">Register</button>
-
-      <p>Already have an account? <Link to="/">Login</Link></p>
     </form>
   );
 }
